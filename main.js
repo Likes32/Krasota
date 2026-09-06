@@ -33,6 +33,7 @@
       var open = nav.classList.toggle('is-open');
       burger.classList.toggle('is-open', open);
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      doc.body.classList.toggle('nav-open', open);
     });
 
     nav.addEventListener('click', function (e) {
@@ -40,6 +41,7 @@
         nav.classList.remove('is-open');
         burger.classList.remove('is-open');
         burger.setAttribute('aria-expanded', 'false');
+        doc.body.classList.remove("nav-open");
       }
     });
 
@@ -48,12 +50,13 @@
         nav.classList.remove('is-open');
         burger.classList.remove('is-open');
         burger.setAttribute('aria-expanded', 'false');
+        doc.body.classList.remove("nav-open");
         burger.focus();
       }
     });
   }
 
-  /* ---------- Тень у шапки при скролле ---------- */
+  /* ---------- Тень у шапки ---------- */
   var hdr = doc.getElementById('hdr');
   if (hdr) {
     var onScroll = function () {
@@ -61,6 +64,22 @@
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  /* ---------- Нижняя панель записи (телефон) ----------
+     Выезжает, когда первый экран пролистан. Следим за самим первым
+     экраном через IntersectionObserver — так плавнее, чем на scroll. */
+  var mbar = doc.getElementById('mbar');
+  var firstScreen = doc.querySelector('.hero, .phead');
+
+  if (mbar) {
+    if (firstScreen && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        mbar.classList.toggle('is-in', !entries[0].isIntersecting);
+      }, { threshold: 0 }).observe(firstScreen);
+    } else {
+      mbar.classList.add('is-in');
+    }
   }
 
   /* ---------- Появление блоков при скролле ---------- */
