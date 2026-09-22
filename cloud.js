@@ -323,7 +323,12 @@ var SHEET_CSV = {
 
         /* показать секцию, если она ждала данных */
         var section = host.closest('[data-cloud-section]');
-        if (section) section.hidden = false;
+        if (section) {
+          section.hidden = false;
+          /* пометка «пример наполнения» больше не нужна */
+          var note = section.querySelector('[data-demo-note]');
+          if (note) note.remove();
+        }
 
         /* новые кнопки записи должны вести туда же, куда все остальные */
         if (typeof window.applyBookingLinks === 'function') {

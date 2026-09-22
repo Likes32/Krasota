@@ -398,6 +398,13 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   line-height:1.6;flex:1}
 .master .btn{margin-top:auto}
 
+/* пометка на демонстрационном наполнении — исчезает, когда подключена таблица */
+.demo-note{
+  display:inline-block;margin:18px 0 0;padding:7px 16px;border-radius:99px;
+  background:var(--pink-pale);border:1px dashed var(--line-rose);
+  font-size:12.5px;color:var(--muted);
+}
+
 /* ============================================================
    Блок онлайн-записи
    ============================================================ */
