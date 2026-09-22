@@ -193,7 +193,7 @@
       <p>Выберите направление и запишитесь — подберём мастера и время</p>
     </div>
 
-    <div class="svc">
+    <div class="svc" data-cloud="services">
       <article class="svc-card rev">
         <span class="ic-badge ic-badge--lg"><svg class="ic"><use href="#i-eye"></use></svg></span>
         <h3>Брови и ресницы</h3>
@@ -269,6 +269,18 @@
   </div>
 </section>
 
+<!-- ===== Мастера (из Google Таблицы) ===== -->
+<section class="sec" id="masters" data-cloud-section hidden style="background:var(--cream-3)">
+  <div class="container">
+    <div class="sec-head center">
+      <h2>Наши мастера</h2>
+      <div class="hdiv"><i></i><svg viewBox="0 0 24 24"><use href="#i-heart-fill"></use></svg></div>
+      <p>Запишитесь напрямую к специалисту</p>
+    </div>
+    <div class="masters" data-cloud="masters"></div>
+  </div>
+</section>
+
 <!-- ===== CTA-полоса ===== -->
 <section class="band">
   <div class="container band__in">
@@ -339,5 +351,6 @@
 <!-- FOOTER:END -->
 
 <script src="main.js"></script>
+<script src="cloud.js"></script>
 </body>
 </html>

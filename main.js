@@ -16,13 +16,19 @@
   ------------------------------------------------------------------ */
   var BOOKING_URL = '';
 
-  if (BOOKING_URL) {
-    Array.prototype.forEach.call(doc.querySelectorAll('a[data-book]'), function (el) {
+  /* Блоки, подгруженные из Google Таблицы, зовут это повторно
+     для своих кнопок — см. cloud.js */
+  window.applyBookingLinks = function (root) {
+    if (!BOOKING_URL) return;
+    var scope = root || doc;
+    Array.prototype.forEach.call(scope.querySelectorAll('a[data-book]'), function (el) {
       el.href = BOOKING_URL;
       el.target = '_blank';
       el.rel = 'noopener';
     });
-  }
+  };
+
+  window.applyBookingLinks();
 
   /* ---------- Мобильное меню ---------- */
   var burger = doc.getElementById('burger');
