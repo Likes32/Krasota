@@ -206,6 +206,13 @@ var SHEET_CSV = {
     return 'contacts.html#zapis';
   }
 
+  /* contacts.html#zapis → contacts.html?m=Имя#zapis, чтобы на странице
+     записи было видно, к какому мастеру пришёл человек */
+  function withName(url, name) {
+    if (!name) return url;
+    return url.replace('#zapis', '?m=' + encodeURIComponent(name) + '#zapis');
+  }
+
   function renderMasters(rows) {
     return rows.map(function (r) {
       var name = field(r, ['Имя', 'Мастер', 'ФИО']);
@@ -214,9 +221,23 @@ var SHEET_CSV = {
       var pic  = photoUrl(field(r, ['Фото', 'Фотография', 'Ссылка на фото']));
       var link = field(r, ['Контакт', 'Ссылка', 'Телефон', 'Запись']);
 
-      var href = link
-        ? (/^\+?[\d\s()\-]+$/.test(link) ? 'tel:' + link.replace(/[^\d+]/g, '') : link)
-        : bookHref();
+      /* Куда ведёт кнопка на карточке:
+           телефон      → звонок лично этому мастеру
+           ссылка wa.me → чат с готовым текстом, чтобы он понял, откуда клиент
+           любая ссылка → как есть: его онлайн-запись, Telegram и прочее
+           пусто        → общая запись студии, но с именем мастера в адресе */
+      var href;
+      if (!link) {
+        href = withName(bookHref(), name);
+      } else if (/^\+?[\d\s()\-]+$/.test(link)) {
+        href = 'tel:' + link.replace(/[^\d+]/g, '');
+      } else if (/wa\.me\/|api\.whatsapp\.com/.test(link) && link.indexOf('text=') === -1) {
+        href = link + (link.indexOf('?') === -1 ? '?' : '&') + 'text=' +
+          encodeURIComponent('Здравствуйте! Хочу записаться к вам' +
+            (name ? ', ' + name : '') + '. Нашла вас на сайте «Красота с любовью».');
+      } else {
+        href = link;
+      }
 
       var ph = pic
         ? '<img src="' + esc(pic) + '" alt="' + esc(name) + '" loading="lazy">'

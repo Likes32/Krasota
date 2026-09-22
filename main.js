@@ -30,6 +30,18 @@
 
   window.applyBookingLinks();
 
+  /* ---------- Имя мастера в блоке записи ----------
+     На карточке мастера без своей ссылки кнопка ведёт сюда с ?m=Имя.
+     Вставляем через textContent: значение приходит из адреса. */
+  var who = doc.querySelector("[data-book-who]");
+  if (who) {
+    var name = new URLSearchParams(location.search).get("m");
+    if (name) {
+      who.textContent = "Вы записываетесь к мастеру: " + name.slice(0, 80);
+      who.hidden = false;
+    }
+  }
+
   /* ---------- Мобильное меню ---------- */
   var burger = doc.getElementById('burger');
   var nav = doc.getElementById('nav');
