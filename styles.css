@@ -27,10 +27,19 @@
   --shadow-md:0 8px 28px rgba(150,100,95,.10);
   --shadow-lg:0 18px 50px rgba(150,100,95,.14);
   --ease:cubic-bezier(.22,1,.36,1);
+  --ease-soft:cubic-bezier(.32,.72,0,1);
+
+  /* паспарту — рама вокруг фото, как оправа гримёрного зеркала */
+  --mat:10px;                       /* ширина поля рамы */
+  --mat-bg:#FFFDFB;                 /* сама рама */
+  --mat-line:rgba(44,37,35,.09);    /* её внешний контур */
   --pad:clamp(20px,4vw,48px);
 }
 
 *,*::before,*::after{box-sizing:border-box}
+
+/* атрибут hidden должен побеждать любой display из классов */
+[hidden]{display:none!important}
 
 html{scroll-behavior:smooth;scroll-padding-top:88px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -82,6 +91,21 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 .btn--sm{padding:10px 24px;font-size:12.5px}
 .btn--lg{padding:15px 36px;font-size:14.5px}
 .btn--block{width:100%}
+.btn:active{transform:scale(.98)}
+
+/* стрелка у главных кнопок живёт в своём кружке и уезжает по диагонали */
+.btn__go{
+  width:26px;height:26px;margin:-6px -14px -6px 2px;flex:none;
+  border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.22);
+  transition:transform .45s var(--ease-soft),background .3s var(--ease);
+}
+.btn__go svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.8;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.btn:hover .btn__go{transform:translate(3px,-3px);background:rgba(255,255,255,.34)}
+.btn--pale .btn__go,.btn--ghost .btn__go{background:rgba(231,126,147,.16)}
+.btn--pale:hover .btn__go,.btn--ghost:hover .btn__go{background:rgba(255,255,255,.28)}
+@media (prefers-reduced-motion:reduce){.btn__go{transition:none}}
 
 /* ============================================================
    Иконки
@@ -102,13 +126,27 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
    ============================================================ */
 .hdr{
   position:sticky;top:0;z-index:60;
-  background:rgba(252,245,240,.88);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(252,245,240,.86);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border-bottom:1px solid transparent;
-  transition:border-color .35s var(--ease),box-shadow .35s var(--ease);
+  transition:border-color .5s var(--ease-soft);
 }
-.hdr.is-stuck{border-bottom-color:var(--line);box-shadow:0 4px 20px rgba(150,110,100,.06)}
-.hdr__in{display:flex;align-items:center;gap:28px;min-height:78px}
+/* при прокрутке шапка собирается в «остров» и отрывается от краёв */
+.hdr__in{
+  display:flex;align-items:center;gap:28px;min-height:78px;
+  border-radius:0;background:transparent;
+  box-shadow:0 0 0 rgba(150,110,100,0);
+  transition:min-height .5s var(--ease-soft),border-radius .5s var(--ease-soft),
+    box-shadow .5s var(--ease-soft),background .5s var(--ease-soft),
+    margin .5s var(--ease-soft),padding .5s var(--ease-soft);
+}
+.hdr.is-stuck .hdr__in{
+  min-height:64px;margin:10px auto;border-radius:999px;
+  padding-inline:clamp(18px,2.4vw,30px);
+  background:rgba(255,253,251,.72);
+  box-shadow:0 10px 30px rgba(150,110,100,.12),0 0 0 1px var(--mat-line);
+}
+@media (prefers-reduced-motion:reduce){.hdr__in{transition:none}}
 
 .logo{display:block;line-height:1;flex:none;padding:4px 0}
 .logo__a{display:block;font-family:var(--f-script);color:var(--rose);font-size:27px;letter-spacing:.01em}
@@ -145,7 +183,7 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 /* ============================================================
    Заголовки секций
    ============================================================ */
-.sec{padding:clamp(56px,7vw,88px) 0}
+.sec{padding:clamp(64px,8.5vw,116px) 0}
 .sec--tight{padding:clamp(40px,5vw,60px) 0}
 .sec-head{max-width:640px;margin:0 auto clamp(32px,4vw,48px)}
 .sec-head h2{font-size:clamp(27px,3.4vw,38px)}
@@ -162,8 +200,9 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 .arc{
   position:relative;overflow:hidden;
   border-radius:36% 0 0 36% / 50% 0 0 50%;
-  box-shadow:var(--shadow-md);
   background:var(--cream-3);
+  /* без паспарту: дуга выходит за край экрана, рама обрывалась бы */
+  box-shadow:var(--shadow-md);
 }
 .arc img{width:100%;height:100%;object-fit:cover}
 
@@ -214,7 +253,14 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
    Галерея пространства
    ============================================================ */
 .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.5vw,18px)}
-.gal figure{margin:0;overflow:hidden;border-radius:14px;box-shadow:var(--shadow-sm);background:var(--cream-3)}
+.gal figure{
+  margin:0;padding:var(--mat);border-radius:20px;
+  background:var(--mat-bg);box-shadow:0 1px 0 var(--mat-line) inset,var(--shadow-sm);
+  outline:1px solid var(--mat-line);outline-offset:-1px;
+  transition:box-shadow .5s var(--ease-soft),transform .5s var(--ease-soft);
+}
+.gal figure:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.gal figure img{border-radius:12px}
 .gal img{aspect-ratio:3/4;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
 .gal figure:hover img{transform:scale(1.05)}
 
@@ -248,8 +294,12 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
    Двухколоночные блоки
    ============================================================ */
 .split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,5vw,64px);align-items:center}
-.split__media{overflow:hidden;border-radius:20px;box-shadow:var(--shadow-md);background:var(--cream-3)}
-.split__media img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.split__media{
+  padding:var(--mat);border-radius:26px;
+  background:var(--mat-bg);box-shadow:var(--shadow-md);
+  outline:1px solid var(--mat-line);outline-offset:-1px;
+}
+.split__media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:18px}
 .split--rev .split__media{order:2}
 .split h2{font-size:clamp(26px,3.2vw,36px)}
 .split .lead{margin:20px 0 0;color:var(--muted);font-size:14.5px}
@@ -437,7 +487,8 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 
 .map{
   position:relative;margin:0;overflow:hidden;
-  border-radius:32% 20px 20px 20px / 42% 20px 20px 20px;box-shadow:var(--shadow-md);
+  border-radius:32% 20px 20px 20px / 42% 20px 20px 20px;
+  box-shadow:0 0 0 var(--mat) var(--mat-bg),0 0 0 calc(var(--mat) + 1px) var(--mat-line),var(--shadow-md);
   background:var(--cream-3);aspect-ratio:4/3;
 }
 .map__tiles{
@@ -496,15 +547,15 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 /* ============================================================
    Появление при скролле
    ============================================================ */
-.js .rev{opacity:0;transform:translateY(22px);
-  transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.js .rev.is-in{opacity:1;transform:none}
+.js .rev{opacity:0;transform:translateY(26px);filter:blur(6px);
+  transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft),filter .9s var(--ease-soft)}
+.js .rev.is-in{opacity:1;transform:none;filter:none}
 .js .rev-d1{transition-delay:.09s}
 .js .rev-d2{transition-delay:.18s}
 .js .rev-d3{transition-delay:.27s}
-.no-anim .rev{opacity:1!important;transform:none!important;transition:none!important}
+.no-anim .rev{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
 @media (prefers-reduced-motion:reduce){
-  .js .rev{opacity:1;transform:none;transition:none}
+  .js .rev{opacity:1;transform:none;filter:none;transition:none}
   .gal img,.card,.tariff,.btn{transition:none}
 }
 
@@ -644,4 +695,29 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   .mbar__call .ic{width:20px;height:20px}
   body{padding-bottom:84px}
   .no-anim .mbar{transform:none}
+}
+
+
+/* ============================================================
+   Плёночное зерно — едва заметная фактура поверх кремового фона
+   ============================================================ */
+body::after{
+  content:"";position:fixed;inset:0;z-index:90;pointer-events:none;
+  opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media print{body::after{display:none}}
+
+/* ============================================================
+   Телефон: остров и широкое паспарту тут только мешают
+   ============================================================ */
+@media (max-width:820px){
+  :root{--mat:6px}
+  .hdr.is-stuck .hdr__in{
+    min-height:68px;margin:0;border-radius:0;
+    padding-inline:0;background:transparent;box-shadow:none;
+  }
+  .hdr.is-stuck{border-bottom-color:var(--line);box-shadow:0 4px 20px rgba(150,110,100,.06)}
+  .gal figure{border-radius:14px}
+  .gal figure img{border-radius:9px}
 }
