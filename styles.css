@@ -659,15 +659,21 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
     border-radius:0 0 34px 34px;box-shadow:0 12px 30px rgba(150,100,95,.12);
   }
   .hero__media .arc img{object-position:50% 55%}
-  .hero{padding-bottom:0}
-  .hero__grid{padding-block-end:0;gap:30px}
+  .hero{padding-bottom:0;padding-top:0}
+  .hero__grid{padding-block-end:0;padding-block-start:0;gap:26px}
   .phead__grid{padding-block-end:0}
   .phead{padding-bottom:clamp(28px,6vw,40px)}
 
-  /* --- текст хиро --- */
-  .hero__tags{font-size:13.5px;text-wrap:balance}
-  .hero__sub{margin-top:20px}
-  .hero__cta{margin-top:24px}
+  /* --- лицо сайта: фото сразу под шапкой, текст короче ---
+     фото первым, заголовок только самое нужное: título + одна
+     строка + кнопка. Теги-строка и три плашки-факта убраны с
+     первого экрана телефона — та же мысль уже есть в «Направлениях»
+     сразу под хиро, повторять её текстом тут незачем. */
+  .hero__media{order:-1}
+  .hero__copy{padding-top:26px}
+  .hero__tags,.hero__feats{display:none}
+  .hero__sub{margin-top:14px}
+  .hero__cta{margin-top:22px}
   .hero__cta .btn{width:100%}
 
   /* --- удобные тач-цели --- */
@@ -758,6 +764,8 @@ body::after{
   margin:0 0 6px;font-size:11.5px;font-weight:500;letter-spacing:.08em;
   text-transform:uppercase;color:var(--rose-dk);
 }
+.teacher__who{display:flex;align-items:center;gap:16px;margin-bottom:4px}
+.teacher__who .master__ph{width:72px;height:72px;flex:none}
 .teacher-split h3{font-size:clamp(22px,2.6vw,28px)}
 .teacher-demo-note{display:block;width:fit-content;margin:14px auto 0}
 
