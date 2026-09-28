@@ -589,6 +589,11 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
    Адаптив
    ============================================================ */
 @media (max-width:1000px){
+  /* иконка над текстом, а не рядом — тексту физически некуда
+     наезжать на соседний пункт, независимо от длины слова */
+  .hero__feat{flex-direction:column;text-align:center;gap:8px}
+  .hero__feat span{max-width:150px}
+
   .hero__grid{grid-template-columns:1fr;min-height:0;gap:36px}
   .hero__media{margin:0 calc(var(--pad) * -1) 0 0;height:clamp(300px,56vw,420px)}
   .hero__media .arc{inset:0}
