@@ -30,6 +30,30 @@
 
   window.applyBookingLinks();
 
+  /* ---------- Лёгкий параллакс розовых пятен в хиро ----------
+     Только там, где есть настоящая мышь (не палец на экране), и только
+     если пользователь не просил уменьшить анимации. Сдвиг небольшой —
+     это фон, а не аттракцион. */
+  (function () {
+    var blobs = doc.querySelectorAll('.hero__blob');
+    if (!blobs.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce), (hover: none), (pointer: coarse)').matches) return;
+
+    var hero = doc.querySelector('.hero');
+    if (!hero) return;
+
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;  /* -0.5..0.5 */
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      blobs[0] && (blobs[0].style.transform = 'translate(' + (x * 22) + 'px,' + (y * 22) + 'px)');
+      blobs[1] && (blobs[1].style.transform = 'translate(' + (x * -16) + 'px,' + (y * -16) + 'px)');
+    });
+    hero.addEventListener('mouseleave', function () {
+      blobs.forEach(function (b) { b.style.transform = ''; });
+    });
+  })();
+
   /* ---------- Минималистичный слайдер (примеры работ) ----------
      Без своей точки/JS показывает первый кадр как обычную фотографию —
      это и есть исходное состояние разметки, JS только добавляет смену. */
