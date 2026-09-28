@@ -30,6 +30,52 @@
 
   window.applyBookingLinks();
 
+  /* ---------- Минималистичный слайдер (примеры работ) ----------
+     Без своей точки/JS показывает первый кадр как обычную фотографию —
+     это и есть исходное состояние разметки, JS только добавляет смену. */
+  Array.prototype.forEach.call(doc.querySelectorAll('[data-tslider]'), function (el) {
+    var slides = el.querySelectorAll('.tslider__slide');
+    var dots = el.querySelectorAll('.tslider__dots button');
+    if (slides.length < 2) return;
+
+    var current = 0;
+    var timer = null;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(next) {
+      slides[current].classList.remove('is-active');
+      if (dots[current]) {
+        dots[current].classList.remove('is-active');
+        dots[current].setAttribute('aria-selected', 'false');
+      }
+      current = (next + slides.length) % slides.length;
+      slides[current].classList.add('is-active');
+      if (dots[current]) {
+        dots[current].classList.add('is-active');
+        dots[current].setAttribute('aria-selected', 'true');
+      }
+    }
+
+    function start() {
+      if (reduceMotion) return; /* точки листаются вручную, автопрокрутки нет */
+      stop();
+      timer = setInterval(function () { show(current + 1); }, 4200);
+    }
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    Array.prototype.forEach.call(dots, function (dot, idx) {
+      dot.addEventListener('click', function () { show(idx); start(); });
+    });
+    el.addEventListener('mouseenter', stop);
+    el.addEventListener('mouseleave', start);
+    el.addEventListener('focusin', stop);
+    el.addEventListener('focusout', start);
+
+    start();
+  });
+
   /* ---------- Имя мастера в блоке записи ----------
      На карточке мастера без своей ссылки кнопка ведёт сюда с ?m=Имя.
      Вставляем через textContent: значение приходит из адреса. */

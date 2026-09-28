@@ -723,56 +723,48 @@ body::after{
 }
 
 /* ============================================================
-   Преподаватель курса — карточка внутри «Обучения»
+   Преподаватель курса — та же вёрстка split, что и у «Обучения»,
+   плюс минималистичный слайдер её работ вместо сетки фото
    ============================================================ */
-.teacher{
-  margin-top:clamp(40px,5vw,56px);
-  background:var(--pink-pale);border:1px solid rgba(231,126,147,.16);
-  border-radius:24px;padding:clamp(28px,3.4vw,42px);
-}
-.teacher__head{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.teacher__head .master__ph{width:96px;height:96px;box-shadow:0 0 0 4px #fff}
-.teacher__head .master__ini{font-size:30px}
+.split--pair{margin-top:clamp(52px,6.5vw,84px)}
+
 .teacher__eyebrow{
-  margin:0 0 4px;font-size:11.5px;font-weight:500;letter-spacing:.08em;
+  margin:0 0 6px;font-size:11.5px;font-weight:500;letter-spacing:.08em;
   text-transform:uppercase;color:var(--rose-dk);
 }
-.teacher__head h3{font-size:clamp(21px,2.4vw,26px)}
-.teacher__role{margin:5px 0 0;font-size:13.5px;color:var(--muted)}
+.teacher-split h3{font-size:clamp(22px,2.6vw,28px)}
+.teacher-demo-note{display:block;width:fit-content;margin:14px auto 0}
 
-.teacher__bio{margin:22px 0 0;font-size:14.5px;line-height:1.7;color:var(--ink-2);
-  max-width:68ch}
+/* --- слайдер: один кадр за раз, переключение точками --- */
+.tslider{
+  position:relative;overflow:hidden;border-radius:18px;
+  aspect-ratio:4/3;background:var(--cream-3);
+}
+.tslider__slide{
+  position:absolute;inset:0;opacity:0;
+  transition:opacity 1s var(--ease-soft);
+}
+.tslider__slide.is-active{opacity:1}
+.tslider__slide img{width:100%;height:100%;object-fit:cover;display:block}
 
-.teacher__stats{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;margin-top:24px;
+.tslider::after{
+  content:"";position:absolute;inset:auto 0 0 0;height:40%;pointer-events:none;
+  background:linear-gradient(to top,rgba(20,14,12,.32),transparent);
 }
-.teacher__stat{
-  background:#fff;border-radius:14px;padding:16px 14px;text-align:center;
+.tslider__dots{
+  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:2;
+  display:flex;gap:8px;
 }
-.teacher__stat b{display:block;font-family:var(--f-disp);font-size:19px;color:var(--rose-dk)}
-.teacher__stat span{display:block;margin-top:3px;font-size:12px;color:var(--muted)}
+.tslider__dots button{
+  width:7px;height:7px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.55);
+  transition:transform .3s var(--ease),background .3s var(--ease);
+}
+.tslider__dots button.is-active{background:#fff;transform:scale(1.35)}
+.tslider__dots button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 
-.teacher__pf{margin-top:30px}
-.teacher__ptitle{
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  font-size:13px;font-weight:500;color:var(--ink);margin:0 0 14px;
-}
-.teacher__pgrid{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
-}
-.teacher__pgrid figure{
-  margin:0;padding:6px;border-radius:14px;background:#fff;
-  box-shadow:var(--shadow-sm);
-}
-.teacher__pgrid img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:9px}
-
-.teacher__cta{margin-top:26px}
-
-@media (max-width:720px){
-  .teacher__stats{grid-template-columns:1fr}
-  .teacher__pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .teacher__cta .btn{width:100%}
+@media (prefers-reduced-motion:reduce){
+  .tslider__slide{transition:none}
 }
 
 /* ============================================================
