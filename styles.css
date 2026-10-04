@@ -21,6 +21,7 @@
 
   --f-disp:'Playfair Display',Georgia,'Times New Roman',serif;
   --f-script:'Marck Script','Playfair Display',cursive;
+  --f-logo:'Yeseva One','Playfair Display',Georgia,serif;
   --f-body:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
 
   --shadow-sm:0 2px 10px rgba(120,80,70,.05);
@@ -149,8 +150,8 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 @media (prefers-reduced-motion:reduce){.hdr__in{transition:none}}
 
 .logo{display:block;line-height:1;flex:none;padding:4px 0}
-.logo__a{display:block;font-family:var(--f-script);color:var(--rose);font-size:27px;letter-spacing:.01em}
-.logo__b{display:block;font-family:var(--f-script);color:var(--rose);font-size:21px;opacity:.78;margin:-3px 0 0 32px}
+.logo__a{display:block;font-family:var(--f-logo);color:var(--rose);font-size:24px;letter-spacing:.015em}
+.logo__b{display:block;font-family:var(--f-logo);color:var(--rose);font-size:16px;opacity:.8;margin:4px 0 0 32px;letter-spacing:.01em}
 
 .nav{margin-left:auto;display:flex;align-items:center;gap:clamp(14px,2vw,30px)}
 .nav a{
