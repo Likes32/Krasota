@@ -270,7 +270,7 @@ var SHEET_CSV = {
         (items.length ? '<ul class="tariff__list">' + items.map(function (t) {
           return '<li>' + check() + esc(t) + '</li>';
         }).join('') + '</ul>' : '') +
-        '<a class="btn btn--rose btn--sm btn--block" href="' + bookHref() + '" data-book>Забронировать</a>' +
+        '<a class="btn btn--rose btn--sm btn--block" href="' + bookHref() + '" data-book="cowork">Забронировать</a>' +
         '</article>';
     }).join('');
   }
@@ -289,7 +289,7 @@ var SHEET_CSV = {
           (text ? '<p>' + esc(text) + '</p>' : '') +
           '<div class="place__foot">' +
             (price ? '<span class="place__price">от <b>' + esc(price) + '</b></span>' : '') +
-            '<a class="btn btn--pale btn--sm" href="' + bookHref() + '" data-book>Забронировать</a>' +
+            '<a class="btn btn--pale btn--sm" href="' + bookHref() + '" data-book="cowork">Забронировать</a>' +
           '</div>' +
         '</div>' +
         '</article>';

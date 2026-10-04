@@ -271,7 +271,7 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   position:absolute;inset:clamp(18px,2.5vw,32px) 0;
   width:calc(100% + 6vw);
 }
-.hero__media .arc img{object-position:50% 66%}
+.hero__media .arc img{object-position:50% 42%}
 
 .hero__blob{
   position:absolute;pointer-events:none;border-radius:50%;z-index:0;
@@ -333,6 +333,8 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   outline:1px solid var(--mat-line);outline-offset:-1px;
 }
 .split__media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:18px}
+/* вертикальные кадры (портрет, выпускница под неоном) — без обрезки в горизонталь */
+.split__media--tall img{aspect-ratio:4/5}
 .split--rev .split__media{order:2}
 .split h2{font-size:clamp(26px,3.2vw,36px)}
 .split .lead{margin:20px 0 0;color:var(--muted);font-size:14.5px}
@@ -379,6 +381,29 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   gap:clamp(14px,1.8vw,22px);align-items:stretch;margin-top:14px}
 .tariffs--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .edu-tariffs{margin-top:clamp(52px,6.5vw,84px)}
+
+/* --- запись на обучение: одна для всех тарифов, номер — главное действие --- */
+.edu-zapis{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  margin-top:clamp(22px,2.6vw,30px);padding:18px 26px 18px 18px;
+  background:var(--pink-pale);border:1px solid var(--line-rose);border-radius:22px;
+}
+.edu-zapis .ic-badge{width:48px;height:48px;flex:none;background:#fff}
+.edu-zapis__text{flex:1;min-width:200px}
+.edu-zapis__text p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.edu-zapis__text .edu-zapis__title{margin:0;font-family:var(--f-disp);font-size:clamp(18px,1.9vw,21px);color:var(--ink)}
+.edu-zapis__phone{
+  font-family:var(--f-disp);font-size:clamp(20px,2.3vw,26px);color:var(--rose-dk);
+  text-decoration:none;white-space:nowrap;
+  border-bottom:1px solid var(--line-rose);padding-bottom:2px;
+  transition:color .3s var(--ease),border-color .3s var(--ease);
+}
+.edu-zapis__phone:hover{color:var(--rose);border-color:var(--rose)}
+.edu-zapis__phone:focus-visible{outline:2px solid var(--rose);outline-offset:4px;border-radius:4px}
+
+/* три варианта записи на «Контактах» */
+.cards--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.book-ways{margin-top:clamp(16px,2vw,22px)}
 .tariff{
   position:relative;display:flex;flex-direction:column;
   background:var(--pink-pale);border:1px solid rgba(231,126,147,.16);border-radius:16px;
@@ -520,6 +545,20 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 .clist dt{font-size:12.5px;color:var(--muted);letter-spacing:.01em;font-weight:500}
 .clist dd{margin:2px 0 0;font-size:15px;color:var(--ink)}
 .clist a:hover{color:var(--rose-dk)}
+.clist__note{display:block;margin-top:3px;font-size:13px;color:var(--muted)}
+.clist__route{display:inline-block;margin-top:6px;font-size:13px;color:var(--rose-dk);
+  text-decoration:none;border-bottom:1px solid var(--line-rose)}
+.clist__route:hover{border-color:var(--rose-dk)}
+
+/* вход в здание — фото двери и короткая подсказка */
+.entry{
+  display:flex;gap:18px;align-items:center;margin:30px 0 0;padding:var(--mat);
+  border-radius:22px;background:var(--mat-bg);box-shadow:var(--shadow-md);
+  outline:1px solid var(--mat-line);outline-offset:-1px;
+}
+.entry img{width:clamp(118px,14vw,160px);height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:16px;flex:none}
+.entry figcaption{font-size:13.5px;line-height:1.6;color:var(--ink-2);padding-right:12px}
+.entry figcaption b{display:block;margin-bottom:4px;font-family:var(--f-disp);font-weight:400;font-size:18px;color:var(--ink)}
 
 .map{
   position:relative;margin:0;overflow:hidden;
@@ -533,7 +572,7 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 }
 .map__tiles img{width:100%;height:100%;display:block}
 .map__pin{
-  position:absolute;left:34.1%;top:50.8%;transform:translate(-50%,-100%);
+  position:absolute;left:49.4%;top:46.5%;transform:translate(-50%,-100%);
   width:34px;height:34px;color:var(--rose);
   filter:drop-shadow(0 3px 5px rgba(120,60,70,.35));
 }
@@ -607,6 +646,7 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   .phead__grid{grid-template-columns:1fr;gap:30px}
   .phead__media{height:clamp(220px,42vw,300px)}
   .cards,.tariffs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards--3,.tariffs--3{grid-template-columns:repeat(3,minmax(0,1fr))}
   .places,.svc{grid-template-columns:1fr}
   .feats__grid{grid-template-columns:repeat(2,1fr);gap:28px}
   .gal{grid-template-columns:repeat(2,1fr)}
@@ -669,7 +709,7 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
     position:static;inset:auto;width:100%;height:clamp(280px,68vw,380px);
     border-radius:0 0 34px 34px;box-shadow:0 12px 30px rgba(150,100,95,.12);
   }
-  .hero__media .arc img{object-position:50% 55%}
+  .hero__media .arc img{object-position:50% 38%}
   .hero{padding-bottom:0;padding-top:0}
   .hero__grid{padding-block-end:0;padding-block-start:0;gap:26px}
   .phead__grid{padding-block-end:0}
@@ -694,6 +734,10 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   .band .btn,.split .btn,.ftr__cta .btn{width:100%}
   .band__in{flex-direction:column;align-items:flex-start;gap:16px}
   .band p{max-width:none}
+
+  /* три карточки в ряд на телефоне тесно — столбиком */
+  .cards--3,.tariffs--3{grid-template-columns:1fr;max-width:460px;margin-inline:auto}
+  .edu-zapis{padding:18px}
 
   /* --- блок записи --- */
   .book{flex-direction:column;align-items:stretch;gap:22px}
@@ -778,12 +822,11 @@ body::after{
 .teacher__who{display:flex;align-items:center;gap:16px;margin-bottom:4px}
 .teacher__who .master__ph{width:72px;height:72px;flex:none}
 .teacher-split h3{font-size:clamp(22px,2.6vw,28px)}
-.teacher-demo-note{display:block;width:fit-content;margin:14px auto 0}
 
 /* --- слайдер: один кадр за раз, переключение точками --- */
 .tslider{
   position:relative;overflow:hidden;border-radius:18px;
-  aspect-ratio:4/3;background:var(--cream-3);
+  aspect-ratio:1/1;background:var(--cream-3);
 }
 .tslider__slide{
   position:absolute;inset:0;opacity:0;
@@ -863,7 +906,7 @@ body::after{
 }
 .fmap__tiles img{width:100%;height:100%;display:block}
 .fmap__pin{
-  position:absolute;left:34.1%;top:50.8%;transform:translate(-50%,-100%);
+  position:absolute;left:49.4%;top:46.5%;transform:translate(-50%,-100%);
   width:17px;height:17px;color:var(--rose-dk);
   filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));
 }

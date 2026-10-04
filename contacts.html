@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Контакты — Красота с любовью</title>
-<meta name="description" content="Контакты бьюти-пространства «Красота с любовью»: г. Гатчина, ул. Красная, д. 12. Телефон +7 (911) 123-45-67, ежедневно с 9:00 до 21:00.">
-<link rel="preload" href="photos/contacts.jpg" as="image">
+<meta name="description" content="Контакты бьюти-пространства «Красота с любовью»: г. Гатчина, ул. Горького, д. 3. Телефон +7 (911) 128-01-22, ежедневно с 9:00 до 21:00.">
+<link rel="preload" href="photos/head-contacts.jpg" as="image">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23E77E93' d='M12 21s-6.7-4.3-9-8.2C1.3 9.9 2.6 6 6.2 5.1 8.4 4.6 10.7 5.6 12 7.4c1.3-1.8 3.6-2.8 5.8-2.3 3.6.9 4.9 4.8 3.2 7.7-2.3 3.9-9 8.2-9 8.2Z'/%3E%3C/svg%3E">
@@ -61,6 +61,10 @@
   <symbol id="i-pin" viewBox="0 0 24 24">
     <path d="M12 21.2s7-5.6 7-10.9a7 7 0 1 0-14 0c0 5.3 7 10.9 7 10.9Z"/>
     <circle cx="12" cy="10" r="2.6"/>
+  </symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24">
+    <path d="M5 5.5h14A1.5 1.5 0 0 1 20.5 7v8.5A1.5 1.5 0 0 1 19 17h-8.5L6 20.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5Z"/>
+    <path d="M8 10.2h8M8 13.2h5"/>
   </symbol>
   <symbol id="i-phone" viewBox="0 0 24 24">
     <path d="M6.6 3.6h3l1.5 3.8-2 1.4a12 12 0 0 0 5.1 5.1l1.4-2 3.8 1.5v3a2 2 0 0 1-2.2 2A16.4 16.4 0 0 1 4.6 5.8a2 2 0 0 1 2-2.2Z"/>
@@ -152,8 +156,8 @@
     </div>
     <div class="phead__media rev rev-d1">
       <div class="arc">
-        <img src="photos/contacts.jpg" width="1200" height="900"
-             alt="Светлая студия бьюти-пространства «Красота с любовью»">
+        <img src="photos/head-contacts.jpg" width="1400" height="875"
+             alt="Лаунж-зона с кофемашиной у кирпичной стены">
       </div>
     </div>
   </div>
@@ -166,15 +170,35 @@
       <div>
         <h2>Запись</h2>
         <p class="book__who" data-book-who hidden></p>
-        <p>Услуги, коворкинг, обучение и мастер-классы — записывайтесь удобным
-          способом, поможем подобрать мастера и время.</p>
+        <p>У каждого направления своя запись — выберите нужное ниже.
+          Если удобнее голосом, позвоните.</p>
       </div>
       <div class="book__actions">
-        <a class="btn btn--rose btn--lg" href="tel:+79111234567" data-book>Записаться онлайн<span class="btn__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
-        <a class="btn btn--ghost" href="tel:+79111234567">
-          <svg class="ic" style="width:17px;height:17px"><use href="#i-phone"></use></svg>Позвонить
+        <a class="btn btn--ghost" href="tel:+79111280122">
+          <svg class="ic" style="width:17px;height:17px"><use href="#i-phone"></use></svg>+7 (911) 128-01-22
         </a>
       </div>
+    </div>
+
+    <div class="cards cards--3 book-ways">
+      <article class="card rev">
+        <span class="ic-badge ic-badge--lg"><svg class="ic"><use href="#i-eye"></use></svg></span>
+        <h3>Наращивание ресниц</h3>
+        <p>Онлайн-запись к Анастасии: выберите процедуру и свободное время.</p>
+        <a class="btn btn--rose btn--sm" href="https://dikidi.net/1523754" target="_blank" rel="noopener" data-book="lash">Записаться онлайн</a>
+      </article>
+      <article class="card rev rev-d1">
+        <span class="ic-badge ic-badge--lg"><svg class="ic"><use href="#i-chair"></use></svg></span>
+        <h3>Аренда рабочего места</h3>
+        <p>Место визажиста или кушетка — на час, день, неделю или месяц.</p>
+        <a class="btn btn--rose btn--sm" href="https://dikidi.net/1794550" target="_blank" rel="noopener" data-book="cowork">Забронировать место</a>
+      </article>
+      <article class="card rev rev-d2">
+        <span class="ic-badge ic-badge--lg"><svg class="ic"><use href="#i-chat"></use></svg></span>
+        <h3>Обучение и мастер-классы</h3>
+        <p>Для записи пишите в MAX на этот номер — или позвоните.</p>
+        <a class="btn btn--pale btn--sm" href="tel:+79111280122">+7 (911) 128-01-22</a>
+      </article>
     </div>
   </div>
 </section>
@@ -186,33 +210,45 @@
       <ul class="clist">
         <li>
           <span class="ic-badge"><svg class="ic"><use href="#i-pin"></use></svg></span>
-          <dl><dt>Адрес</dt><dd>г. Гатчина, ул. Красная, д. 12</dd></dl>
+          <dl><dt>Адрес</dt><dd>г. Гатчина, ул. Горького, д. 3
+            <span class="clist__note">5 этаж · домофон 5</span>
+            <a class="clist__route" href="https://yandex.ru/maps/?pt=30.124238,59.565529&amp;z=17&amp;l=map" target="_blank" rel="noopener">Открыть в Яндекс Картах</a></dd></dl>
         </li>
         <li>
           <span class="ic-badge"><svg class="ic"><use href="#i-phone"></use></svg></span>
-          <dl><dt>Телефон</dt><dd><a href="tel:+79111234567">+7 (911) 123-45-67</a></dd></dl>
+          <dl><dt>Телефон</dt><dd><a href="tel:+79111280122">+7 (911) 128-01-22</a></dd></dl>
         </li>
         <li>
           <span class="ic-badge"><svg class="ic"><use href="#i-clock"></use></svg></span>
           <dl><dt>Часы работы</dt><dd>Пн–Вс: 9:00 – 21:00</dd></dl>
         </li>
       </ul>
+
+      <figure class="entry">
+        <img src="photos/entrance.jpg" width="590" height="738" loading="lazy"
+             alt="Вход: две двери с нарисованными берёзами под вывеской «Диалог»">
+        <figcaption>
+          <b>Как найти вход</b>
+          Через детский центр «Диалог» со стороны Горького, 5 — дверь
+          с берёзами и медвежонком, домофон 5. Поднимайтесь на 5 этаж.
+        </figcaption>
+      </figure>
     </div>
     <!-- Статичная карта: локальные тайлы OpenStreetMap, без внешних запросов -->
-    <figure class="map rev rev-d1" aria-label="Карта: г. Гатчина, ул. Красная, д. 12">
+    <figure class="map rev rev-d1" aria-label="Карта: г. Гатчина, ул. Горького, д. 3">
       <div class="map__tiles">
+        <img src="photos/map/15_19124_9593.png" width="256" height="256" alt="">
         <img src="photos/map/15_19125_9593.png" width="256" height="256" alt="">
         <img src="photos/map/15_19126_9593.png" width="256" height="256" alt="">
         <img src="photos/map/15_19127_9593.png" width="256" height="256" alt="">
-        <img src="photos/map/15_19128_9593.png" width="256" height="256" alt="">
+        <img src="photos/map/15_19124_9594.png" width="256" height="256" alt="">
         <img src="photos/map/15_19125_9594.png" width="256" height="256" alt="">
         <img src="photos/map/15_19126_9594.png" width="256" height="256" alt="">
         <img src="photos/map/15_19127_9594.png" width="256" height="256" alt="">
-        <img src="photos/map/15_19128_9594.png" width="256" height="256" alt="">
+        <img src="photos/map/15_19124_9595.png" width="256" height="256" alt="">
         <img src="photos/map/15_19125_9595.png" width="256" height="256" alt="">
         <img src="photos/map/15_19126_9595.png" width="256" height="256" alt="">
         <img src="photos/map/15_19127_9595.png" width="256" height="256" alt="">
-        <img src="photos/map/15_19128_9595.png" width="256" height="256" alt="">
       </div>
       <span class="map__pin" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M12 22.5s7.4-6 7.4-11.6a7.4 7.4 0 1 0-14.8 0C4.6 16.5 12 22.5 12 22.5Z"/></svg>
@@ -256,8 +292,8 @@
       <div>
         <p class="ftr__h">Контакты</p>
         <address class="ftr__contacts">
-          <span><b>г. Гатчина, ул. Красная, д. 12</b></span>
-          <a href="tel:+79111234567">+7 (911) 123-45-67</a>
+          <span><b>г. Гатчина, ул. Горького, д. 3</b></span>
+          <a href="tel:+79111280122">+7 (911) 128-01-22</a>
           <span>Пн–Вс: 9:00 – 21:00</span>
         </address>
       </div>
@@ -279,7 +315,7 @@
 <!-- Нижняя панель записи — показывается только на телефоне -->
 <div class="mbar" id="mbar">
   <a class="btn btn--rose" href="contacts.html#zapis" data-book>Записаться</a>
-  <a class="btn btn--ghost mbar__call" href="tel:+79111234567" aria-label="Позвонить">
+  <a class="btn btn--ghost mbar__call" href="tel:+79111280122" aria-label="Позвонить">
     <svg class="ic"><use href="#i-phone"></use></svg>
   </a>
 </div>

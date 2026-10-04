@@ -7,22 +7,26 @@
   /* ------------------------------------------------------------------
      ОНЛАЙН-ЗАПИСЬ — единственное место, где это настраивается.
 
-     Впишите сюда ссылку из DIKIDI / YCLIENTS (или любого другого сервиса
-     записи) — и все кнопки записи на сайте начнут вести туда, в новой
-     вкладке. Пока строка пустая, кнопки работают по своим запасным
-     адресам: телефон и страница контактов.
-
-     Кнопки помечены атрибутом data-book, добавлять новые не нужно.
+     У направлений разная запись. Кнопка получает ссылку по значению
+     своего атрибута data-book и открывает её в новой вкладке:
+       data-book="lash"   — наращивание ресниц у Анастасии (DIKIDI)
+       data-book="cowork" — аренда рабочих мест (DIKIDI коворкинга)
+     Кнопка с пустым data-book остаётся на блоке записи contacts.html#zapis —
+     там все три варианта, включая обучение (запись через MAX по телефону).
   ------------------------------------------------------------------ */
-  var BOOKING_URL = '';
+  var BOOKING = {
+    lash:   'https://dikidi.net/1523754',
+    cowork: 'https://dikidi.net/1794550'
+  };
 
   /* Блоки, подгруженные из Google Таблицы, зовут это повторно
      для своих кнопок — см. cloud.js */
   window.applyBookingLinks = function (root) {
-    if (!BOOKING_URL) return;
     var scope = root || doc;
     Array.prototype.forEach.call(scope.querySelectorAll('a[data-book]'), function (el) {
-      el.href = BOOKING_URL;
+      var url = BOOKING[el.getAttribute('data-book')];
+      if (!url) return;
+      el.href = url;
       el.target = '_blank';
       el.rel = 'noopener';
     });
