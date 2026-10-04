@@ -107,7 +107,7 @@
   if (who) {
     var name = new URLSearchParams(location.search).get("m");
     if (name) {
-      who.textContent = "Вы записываетесь к мастеру: " + name.slice(0, 80);
+      who.textContent = "Ваша запись: " + name.slice(0, 80);
       who.hidden = false;
     }
   }
