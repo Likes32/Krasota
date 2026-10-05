@@ -46,13 +46,18 @@
     var hero = doc.querySelector('.hero');
     if (!hero) return;
 
+    var raf = 0, mx = 0, my = 0;
     hero.addEventListener('mousemove', function (e) {
       var r = hero.getBoundingClientRect();
-      var x = (e.clientX - r.left) / r.width - 0.5;  /* -0.5..0.5 */
-      var y = (e.clientY - r.top) / r.height - 0.5;
-      blobs[0] && (blobs[0].style.transform = 'translate(' + (x * 22) + 'px,' + (y * 22) + 'px)');
-      blobs[1] && (blobs[1].style.transform = 'translate(' + (x * -16) + 'px,' + (y * -16) + 'px)');
-    });
+      mx = (e.clientX - r.left) / r.width - 0.5;   /* -0.5..0.5 */
+      my = (e.clientY - r.top) / r.height - 0.5;
+      if (raf) return;                              /* не чаще одного раза за кадр */
+      raf = requestAnimationFrame(function () {
+        raf = 0;
+        blobs[0] && (blobs[0].style.transform = 'translate(' + (mx * 22) + 'px,' + (my * 22) + 'px)');
+        blobs[1] && (blobs[1].style.transform = 'translate(' + (mx * -16) + 'px,' + (my * -16) + 'px)');
+      });
+    }, { passive: true });
     hero.addEventListener('mouseleave', function () {
       blobs.forEach(function (b) { b.style.transform = ''; });
     });

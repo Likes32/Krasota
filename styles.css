@@ -1,3 +1,36 @@
+/* Шрифты лежат в fonts/ (woff2). Браузер скачивает только те начертания,
+   символы которых есть на странице; основные предзагружаются в <head>. */
+@font-face{font-family:'Marck Script';font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/marck-cyrillic.woff2) format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Marck Script';font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/marck-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:300 700;font-display:swap;
+  src:url(fonts/montserrat-cyrillic.woff2) format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:300 700;font-display:swap;
+  src:url(fonts/montserrat-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:300 700;font-display:swap;
+  src:url(fonts/montserrat-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url(fonts/playfair-cyrillic.woff2) format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url(fonts/playfair-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url(fonts/playfair-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Yeseva One';font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/yeseva-cyrillic.woff2) format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:'Yeseva One';font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/yeseva-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+
 /* ============================================================
    Красота с любовью — бьюти-пространство в Гатчине
    ============================================================ */
@@ -148,8 +181,8 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   min-height:64px;margin:10px auto;border-radius:999px;
   padding-inline:clamp(18px,2.4vw,30px);
   /* стекло: полупрозрачный фон, сильное размытие с насыщенностью, светлая кромка */
-  background:rgba(255,251,248,.58);
-  backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);
+  background:rgba(255,251,248,.62);
+  backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);
   box-shadow:0 12px 34px rgba(150,110,100,.16),inset 0 1px 0 rgba(255,255,255,.8),
     0 0 0 1px rgba(255,255,255,.5),0 0 0 1.5px rgba(150,110,100,.08);
 }
@@ -576,11 +609,9 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
   box-shadow:0 0 0 var(--mat) var(--mat-bg),0 0 0 calc(var(--mat) + 1px) var(--mat-line),var(--shadow-md);
   background:var(--cream-3);aspect-ratio:4/3;
 }
-.map__tiles{
-  display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);
-  width:100%;height:100%;filter:saturate(.72) brightness(1.03);
-}
-.map__tiles img{width:100%;height:100%;display:block}
+/* карта — одна готовая картинка: цвет смягчён при сборке, а не фильтром на каждый кадр */
+.map__tiles{width:100%;height:100%}
+.map__tiles img{width:100%;height:100%;display:block;object-fit:cover}
 /* вся карта ведёт в Яндекс Карты; подпись OSM остаётся кликабельной поверх */
 .map__open{
   position:absolute;left:14px;bottom:12px;z-index:2;
@@ -667,9 +698,14 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 /* ============================================================
    Появление при скролле
    ============================================================ */
-.js .rev{opacity:0;transform:translateY(26px);filter:blur(6px);
-  transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft),filter .9s var(--ease-soft)}
-.js .rev.is-in{opacity:1;transform:none;filter:none}
+.js .rev{opacity:0;transform:translateY(26px);
+  transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft)}
+.js .rev.is-in{opacity:1;transform:none}
+@media (hover:hover) and (pointer:fine){
+  .js .rev{filter:blur(6px);
+    transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft),filter .9s var(--ease-soft)}
+  .js .rev.is-in{filter:none}
+}
 .js .rev-d1{transition-delay:.09s}
 .js .rev-d2{transition-delay:.18s}
 .js .rev-d3{transition-delay:.27s}
@@ -845,8 +881,8 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
     display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
     position:fixed;left:0;right:0;bottom:0;z-index:70;
     padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));
-    background:rgba(252,245,240,.62);
-    backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);
+    background:rgba(252,245,240,.86);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     border-top:1px solid rgba(150,110,100,.14);
     box-shadow:0 -6px 22px rgba(150,110,100,.08);
     transform:translateY(110%);transition:transform .35s var(--ease);
@@ -868,10 +904,11 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
    ============================================================ */
 body::after{
   content:"";position:fixed;inset:0;z-index:90;pointer-events:none;
-  opacity:.05;mix-blend-mode:multiply;
+  opacity:.045;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 @media print{body::after{display:none}}
+@media (hover:none){body::after{display:none}}
 
 /* ============================================================
    Телефон: остров и широкое паспарту тут только мешают
@@ -885,8 +922,8 @@ body::after{
   }
   /* на телефоне стекло — вся полоса, как панель навигации в iOS */
   .hdr.is-stuck{
-    background:rgba(252,245,240,.6);
-    backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);
+    background:rgba(252,245,240,.74);
+    backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);
     border-bottom-color:rgba(150,110,100,.14);box-shadow:0 4px 20px rgba(150,110,100,.06);
   }
   body.nav-open .hdr{background:var(--cream)}
@@ -980,14 +1017,11 @@ body::after{
   transform:translateY(-3px);
   box-shadow:0 12px 24px rgba(158,50,72,.2),0 0 0 1px rgba(44,37,35,.1);
 }
-.fmap__tiles{
-  display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);
-  width:100%;height:100%;
-  filter:grayscale(1) contrast(1.12) brightness(.94);
-}
-.fmap__tiles img{width:100%;height:100%;display:block}
+/* миниатюра — готовая чёрно-белая картинка с булавкой точно в центре кадра */
+.fmap__tiles{display:block;width:100%;height:100%}
+.fmap__tiles img{width:100%;height:100%;display:block;object-fit:cover}
 .fmap__pin{
-  position:absolute;left:49.4%;top:46.5%;transform:translate(-50%,-100%);
+  position:absolute;left:49.9%;top:50%;transform:translate(-50%,-100%);
   width:17px;height:17px;color:var(--rose-dk);
   filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));
 }
