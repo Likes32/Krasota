@@ -58,6 +58,31 @@
     });
   })();
 
+  /* ---------- Подсветка под курсором на карточках ----------
+     Положение курсора внутри карточки пишем в --mx/--my, остальное делает CSS.
+     Только там, где есть настоящая мышь. Слушаем весь документ, поэтому
+     карточки, подгруженные из таблицы позже, подхватываются сами. */
+  (function () {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var SEL = '.card, .tariff, .place, .svc-card, .master, .edu-zapis';
+    var frame = 0, hit = null, px = 0, py = 0;
+
+    doc.addEventListener('pointermove', function (e) {
+      var el = e.target.closest ? e.target.closest(SEL) : null;
+      if (!el) return;
+      hit = el; px = e.clientX; py = e.clientY;
+      if (frame) return;
+      frame = requestAnimationFrame(function () {
+        frame = 0;
+        var r = hit.getBoundingClientRect();
+        hit.style.setProperty('--mx', (px - r.left) + 'px');
+        hit.style.setProperty('--my', (py - r.top) + 'px');
+      });
+    }, { passive: true });
+  })();
+
   /* ---------- Минималистичный слайдер (примеры работ) ----------
      Без своей точки/JS показывает первый кадр как обычную фотографию —
      это и есть исходное состояние разметки, JS только добавляет смену. */
