@@ -272,7 +272,7 @@ var SHEET_CSV = {
       return '<article class="tariff' + (tag ? ' tariff--best' : '') + '">' +
         (tag ? '<span class="tariff__tag">' + esc(tag) + '</span>' : '') +
         '<h3>' + esc(title) + '</h3>' +
-        (price ? '<p class="tariff__price">от <b>' + esc(price) + '</b></p>' : '') +
+        (price ? '<p class="tariff__price"><b>' + esc(price) + '</b></p>' : '') +
         (note ? '<p class="tariff__note">' + esc(note) + '</p>' : '') +
         (items.length ? '<ul class="tariff__list">' + items.map(function (t) {
           return '<li>' + check() + esc(t) + '</li>';
@@ -288,14 +288,21 @@ var SHEET_CSV = {
       var text  = field(r, ['Описание', 'Оснащение', 'Текст']);
       var price = field(r, ['Цена', 'Стоимость']);
       var icon  = field(r, ['Иконка', 'Значок']) || title;
+      var count = field(r, ['Количество', 'Сколько']);
+
+      /* «250 ₽/час» → жирным только сумма, как в разметке страницы */
+      var parts = String(price).split('/');
+      var priceHtml = '<b>' + esc(parts[0].trim()) + '</b>' +
+        (parts.length > 1 ? '/' + esc(parts.slice(1).join('/').trim()) : '');
 
       return '<article class="place">' +
         badge(icon, true) +
         '<div class="place__body">' +
           '<h3>' + esc(title) + '</h3>' +
+          (count ? '<p class="place__count">' + esc(count) + '</p>' : '') +
           (text ? '<p>' + esc(text) + '</p>' : '') +
           '<div class="place__foot">' +
-            (price ? '<span class="place__price">от <b>' + esc(price) + '</b></span>' : '') +
+            (price ? '<span class="place__price">' + priceHtml + '</span>' : '') +
             '<a class="btn btn--pale btn--sm" href="' + bookHref() + '" data-book="cowork">Забронировать</a>' +
           '</div>' +
         '</div>' +
@@ -348,6 +355,9 @@ var SHEET_CSV = {
         if (!rows.length) return;
 
         host.innerHTML = RENDER[key](rows);
+
+        /* три тарифа — в три колонки, иначе четвёртая карточка повисла бы одна */
+        if (key === 'tariffs') host.classList.toggle('tariffs--3', rows.length === 3);
 
         /* показать секцию, если она ждала данных */
         var section = host.closest('[data-cloud-section]');
