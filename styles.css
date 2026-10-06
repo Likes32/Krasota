@@ -714,14 +714,10 @@ h1,h2,h3,h4{font-family:var(--f-disp);font-weight:400;line-height:1.15;margin:0;
 /* ============================================================
    Появление при скролле
    ============================================================ */
-.js .rev{opacity:0;transform:translateY(26px);
-  transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft)}
-.js .rev.is-in{opacity:1;transform:none}
-@media (hover:hover) and (pointer:fine){
-  .js .rev{filter:blur(6px);
-    transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft),filter .9s var(--ease-soft)}
-  .js .rev.is-in{filter:none}
-}
+.js .rev{opacity:0;transform:translateY(26px);filter:blur(6px);
+  transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft),filter .9s var(--ease-soft)}
+.js .rev.is-in{opacity:1;transform:none;filter:none}
+@media (hover:none){.js .rev{filter:blur(4px)}}
 .js .rev-d1{transition-delay:.09s}
 .js .rev-d2{transition-delay:.18s}
 .js .rev-d3{transition-delay:.27s}
@@ -924,7 +920,6 @@ body::after{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 @media print{body::after{display:none}}
-@media (hover:none){body::after{display:none}}
 
 /* ============================================================
    Телефон: остров и широкое паспарту тут только мешают
@@ -1099,12 +1094,81 @@ body::after{
   }
   :is(.gal figure,.split__media):hover::after{transform:translateX(130%)}
 }
+/* ============================================================
+   Телефон и планшет: те же эффекты, только без мыши
+   Навести палец нельзя, поэтому триггер другой (классы ставит main.js):
+   — .is-lit   — карточка или фото проходит середину экрана: как наведение;
+   — .is-glint — по фото пробегает блик: при выезде на середину и при касании;
+   — .is-touch — свет на карточке перескакивает под палец.
+   ============================================================ */
+@property --mx{syntax:'<length-percentage>';inherits:true;initial-value:50%}
+@property --my{syntax:'<length-percentage>';inherits:true;initial-value:0%}
+@keyframes lit-sweep{from{--mx:-20%}to{--mx:50%}}
+@keyframes glint{from{transform:translateX(-130%)}to{transform:translateX(130%)}}
+@keyframes blob-breathe{to{scale:1.12}}
+
 @media (hover:none){
+  /* свет и розовая кромка — те же, что под курсором */
+  :is(.card,.tariff,.place,.svc-card,.master,.edu-zapis)::before{
+    content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(360px circle at var(--mx,50%) var(--my,0%),var(--glow-in),transparent 70%);
+    opacity:0;transition:opacity .5s var(--ease-soft);
+  }
+  :is(.card,.tariff,.place,.svc-card,.master,.edu-zapis)::after{
+    content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;
+    background:radial-gradient(240px circle at var(--mx,50%) var(--my,0%),var(--glow-line),transparent 72%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    opacity:0;transition:opacity .5s var(--ease-soft);
+  }
+  :is(.card,.tariff,.place,.svc-card,.master,.edu-zapis):is(.is-lit,.is-touch)::before,
+  :is(.card,.tariff,.place,.svc-card,.master,.edu-zapis):is(.is-lit,.is-touch)::after{opacity:1}
+  /* «загорание»: свет въезжает слева и останавливается сверху по центру */
+  :is(.card,.tariff,.place,.svc-card,.master,.edu-zapis).is-lit:not(.is-touch){animation:lit-sweep 1.3s var(--ease-soft)}
+
+  /* то, что у мыши происходило при наведении */
+  :is(.card,.svc-card,.master).is-lit{box-shadow:var(--shadow-lg)}
+  .tariff.is-lit{box-shadow:var(--shadow-lg);border-color:var(--line-rose)}
+  .place.is-lit{box-shadow:var(--shadow-md)}
+  :is(.card,.place,.svc-card).is-lit .ic-badge{background:var(--rose);color:#fff;transform:scale(1.08) rotate(-6deg)}
   :is(.card,.tariff,.place,.svc-card,.master):active{scale:.985}
+
+  /* фото: блик и лёгкий наезд */
+  .gal figure,.split__media{position:relative;overflow:hidden}
+  :is(.gal figure,.split__media)::after{
+    content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+    background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.5) 50%,transparent 64%);
+    transform:translateX(-130%);
+  }
+  /* ровнее и дольше, чем у мыши: на телефоне блик видят один раз, «повторить наведением» нельзя */
+  :is(.gal figure,.split__media).is-glint::after{animation:glint 1.5s cubic-bezier(.45,.1,.35,1)}
+  .gal figure:nth-child(even).is-glint::after{animation-delay:.16s}   /* в сетке 2×2 блик идёт волной */
+  .gal figure.is-lit{box-shadow:var(--shadow-lg)}
+  .gal figure.is-lit img{transform:scale(1.03)}
+
+  /* кнопки: вместо подъёма при наведении — вжатие при нажатии.
+     iOS после касания «залипает» в :hover — кнопка не должна оставаться приподнятой */
+  .btn:hover,.map__open:hover{transform:none}
+  .btn:active{transform:scale(.96)}
+  .btn:active .btn__go{transform:translate(3px,-3px);background:rgba(255,255,255,.34)}
+  .map__open:active{transform:scale(.96)}
+  .fmap-row:active .fmap{transform:scale(.96)}
+  .ftr__nav a:active{background:rgba(255,255,255,.88)}
+  .burger:active{transform:scale(.9)}
+
+  /* пятна в хиро медленно «дышат»; при прокрутке их сдвигает main.js */
+  .hero__blob{animation:blob-breathe 9s ease-in-out infinite alternate}
+  .hero__blob--2{animation-duration:12s;animation-delay:-5s}
+
+  /* слайдер листается свайпом: горизонтальный жест — скрипту, вертикальный — странице */
+  .tslider{touch-action:pan-y}
 }
 @media (prefers-reduced-motion:reduce){
   :is(.card,.tariff,.place,.svc-card,.master,.edu-zapis)::before,
   :is(.card,.tariff,.place,.svc-card,.master,.edu-zapis)::after,
   :is(.gal figure,.split__media)::after{display:none}
   :is(.card,.tariff,.place,.svc-card,.master,.gal figure):hover{translate:none}
+  :is(.card,.tariff,.place,.svc-card,.master,.edu-zapis).is-lit{animation:none}
+  .gal figure.is-lit img{transform:none}
+  .hero__blob{animation:none}
 }

@@ -379,6 +379,10 @@ var SHEET_CSV = {
         if (typeof window.applyBookingLinks === 'function') {
           window.applyBookingLinks(host);
         }
+        /* на телефоне новые карточки тоже «загораются» в середине экрана — см. main.js */
+        if (typeof window.watchTouchEffects === 'function') {
+          window.watchTouchEffects(host);
+        }
       })
       .catch(function (err) {
         /* Таблица недоступна — на странице остаётся вшитый вариант.

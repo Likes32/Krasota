@@ -35,18 +35,36 @@
   window.applyBookingLinks();
 
   /* ---------- Лёгкий параллакс розовых пятен в хиро ----------
-     Только там, где есть настоящая мышь (не палец на экране), и только
-     если пользователь не просил уменьшить анимации. Сдвиг небольшой —
-     это фон, а не аттракцион. */
+     С мышью пятна плывут за курсором, на телефоне — при прокрутке
+     (сдвиг сглаживает transition в CSS). Не работает, если пользователь
+     просил уменьшить анимации. Сдвиг небольшой — это фон, а не аттракцион. */
   (function () {
     var blobs = doc.querySelectorAll('.hero__blob');
     if (!blobs.length) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce), (hover: none), (pointer: coarse)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var hero = doc.querySelector('.hero');
     if (!hero) return;
 
     var raf = 0, mx = 0, my = 0;
+
+    if (window.matchMedia('(hover: none)').matches) {
+      var visible = true;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(hero);
+      }
+      window.addEventListener('scroll', function () {
+        if (!visible || raf) return;
+        raf = requestAnimationFrame(function () {
+          raf = 0;
+          var y = Math.min(window.scrollY, hero.offsetHeight);
+          blobs[0] && (blobs[0].style.transform = 'translate3d(0,' + (y * 0.22) + 'px,0)');
+          blobs[1] && (blobs[1].style.transform = 'translate3d(0,' + (y * -0.14) + 'px,0)');
+        });
+      }, { passive: true });
+      return;
+    }
+
     hero.addEventListener('mousemove', function (e) {
       var r = hero.getBoundingClientRect();
       mx = (e.clientX - r.left) / r.width - 0.5;   /* -0.5..0.5 */
@@ -86,6 +104,81 @@
         hit.style.setProperty('--my', (py - r.top) + 'px');
       });
     }, { passive: true });
+  })();
+
+  /* ---------- Телефон и планшет: эффекты наведения — через прокрутку и касание ----------
+     Навести палец нельзя, поэтому:
+     — карточка или фото, проходя середину экрана, получает .is-lit (как наведение);
+     — по фото пробегает блик .is-glint: при выезде на середину и при касании;
+     — при касании свет на карточке перескакивает под палец (.is-touch и --mx/--my).
+     Следим через IntersectionObserver — без обработчиков прокрутки. Карточки,
+     которые позже дорисует cloud.js, подключает window.watchTouchEffects. */
+  (function () {
+    if (!window.matchMedia('(hover: none)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+
+    var CARDS = '.card, .tariff, .place, .svc-card, .master, .edu-zapis';
+    var PHOTOS = '.gal figure, .split__media';
+
+    function glint(el) {
+      el.classList.remove('is-glint');
+      void el.offsetWidth;                       /* перезапустить анимацию */
+      el.classList.add('is-glint');
+    }
+
+    /* «середина экрана» — полоса в 30% высоты по центру */
+    var middle = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var el = e.target;
+        if (e.isIntersecting && !el.classList.contains('is-lit') && el.matches(PHOTOS)) glint(el);
+        el.classList.toggle('is-lit', e.isIntersecting);
+      });
+    }, { rootMargin: '-35% 0px -35% 0px' });
+
+    window.watchTouchEffects = function (root) {
+      Array.prototype.forEach.call((root || doc).querySelectorAll(CARDS + ', ' + PHOTOS), function (el) {
+        middle.observe(el);
+      });
+    };
+    window.watchTouchEffects();
+
+    doc.addEventListener('animationend', function (e) {
+      if (e.animationName === 'glint') e.target.classList.remove('is-glint');
+    });
+
+    /* касание: свет под палец; гаснет через полсекунды после того, как палец убран */
+    var touched = null, release = 0;
+    function off(card) {
+      card.classList.remove('is-touch');
+      card.style.removeProperty('--mx');
+      card.style.removeProperty('--my');
+    }
+    doc.addEventListener('pointerdown', function (e) {
+      if (!e.target.closest) return;
+      var photo = e.target.closest(PHOTOS);
+      if (photo) glint(photo);
+      var card = e.target.closest(CARDS);
+      if (!card) return;
+      clearTimeout(release);
+      if (touched && touched !== card) off(touched);
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      card.classList.add('is-touch');
+      touched = card;
+    }, { passive: true });
+    function letGo() {
+      if (!touched) return;
+      var card = touched;
+      clearTimeout(release);
+      release = setTimeout(function () { off(card); if (touched === card) touched = null; }, 650);
+    }
+    doc.addEventListener('pointerup', letGo, { passive: true });
+    doc.addEventListener('pointercancel', letGo, { passive: true });
+
+    /* iOS Safari включает :active (вжатие кнопок и карточек), только если на странице есть touchstart */
+    doc.addEventListener('touchstart', function () {}, { passive: true });
   })();
 
   /* ---------- Минималистичный слайдер (примеры работ) ----------
@@ -130,6 +223,22 @@
     el.addEventListener('mouseleave', start);
     el.addEventListener('focusin', stop);
     el.addEventListener('focusout', start);
+
+    /* свайп пальцем: влево — следующий кадр, вправо — предыдущий; пока палец на кадре — пауза */
+    var sx = null, sy = 0;
+    el.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { sx = null; return; }
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      stop();
+    }, { passive: true });
+    el.addEventListener('touchend', function (e) {
+      if (sx === null) return;
+      var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      sx = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.4) show(current + (dx < 0 ? 1 : -1));
+      start();
+    }, { passive: true });
+    el.addEventListener('touchcancel', function () { sx = null; start(); }, { passive: true });
 
     start();
   });
