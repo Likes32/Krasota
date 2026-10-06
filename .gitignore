@@ -1,2 +1,10 @@
 # исходники от заказчицы (HEIC, сторис, фото учениц) — на сайт идут только обработанные копии из photos/
 Фото Анастасии/
+
+# служебные кэши и зависимости инструментов сборки
+node_modules/
+tools/.cache/
+tools/.sr/
+package.json
+package-lock.json
+tools/.hf-cache/
