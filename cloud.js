@@ -315,14 +315,21 @@ var SHEET_CSV = {
       var title = field(r, ['Направление', 'Название', 'Услуга']);
       var items = list(field(r, ['Процедуры', 'Что входит', 'Список']));
       var icon  = field(r, ['Иконка', 'Значок']) || title;
+      /* колонка «Мастер»: «Анастасия» — принимает она, запись в её DIKIDI;
+         любое другое значение или пусто — мастер на выбор, подбор по телефону/MAX */
+      var own   = /анастас/i.test(field(r, ['Мастер', 'Кто принимает']));
 
       return '<article class="svc-card">' +
         badge(icon, true) +
         '<h3>' + esc(title) + '</h3>' +
+        '<p class="svc-card__who' + (own ? ' svc-card__who--own' : '') + '">' +
+          (own ? 'Принимает Анастасия' : 'Мастер на выбор') + '</p>' +
         (items.length ? '<ul>' + items.map(function (t) {
           return '<li>' + esc(t) + '</li>';
         }).join('') + '</ul>' : '') +
-        '<a class="btn btn--pale btn--sm" href="' + bookHref() + '" data-book>Записаться</a>' +
+        (own
+          ? '<a class="btn btn--pale btn--sm" href="' + bookHref() + '" data-book="anastasia">Записаться</a>'
+          : '<a class="btn btn--pale btn--sm" href="' + withName(bookHref(), 'Подбор мастера — ' + title) + '">Подобрать мастера</a>') +
         '</article>';
     }).join('');
   }
