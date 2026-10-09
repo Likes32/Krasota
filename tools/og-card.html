@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Карточка для превью ссылки (1200×630)</title>
+<!-- Исходник photos/og-cover.jpg: открыть через локальный сервер из корня сайта
+     (http://localhost:ПОРТ/tools/og-card.html) и сфотографировать область 1200×630. -->
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden}
+  body{position:relative;background:linear-gradient(120deg,#FCF5F0 0%,#FAEFE7 52%,#F7D2D6 135%)}
+  body::after{display:none}
+  .blob{position:absolute;border-radius:50%;filter:blur(2px)}
+  .b1{width:520px;height:520px;left:-170px;top:-190px;background:radial-gradient(circle,rgba(247,210,214,.85),rgba(247,210,214,0) 68%)}
+  .b2{width:560px;height:560px;left:380px;bottom:-330px;background:radial-gradient(circle,rgba(240,167,182,.38),rgba(240,167,182,0) 68%)}
+  .txt{position:absolute;left:84px;top:0;bottom:0;width:600px;display:flex;flex-direction:column;justify-content:center}
+  .o-a{font:400 112px/1 var(--f-logo);color:var(--rose-dk);letter-spacing:.005em}
+  .o-b{font:400 70px/1 var(--f-logo);color:var(--rose);margin:6px 0 0 168px}
+  .o-line{width:150px;height:2px;margin:34px 0 26px;background:linear-gradient(90deg,var(--rose),rgba(231,126,147,0))}
+  .o-tag{font:500 31px/1.3 var(--f-body);color:var(--ink)}
+  .o-chips{margin-top:20px;font:500 20px/1.4 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--rose-ink)}
+  .o-addr{margin-top:34px;font:400 22px/1.4 var(--f-body);color:var(--ink-2)}
+  .arc{position:absolute;right:66px;top:42px;width:456px;height:546px;padding:10px;box-sizing:border-box;background:#FFFDFB;
+       border-radius:228px 228px 30px 30px;box-shadow:0 26px 60px rgba(150,100,95,.22),0 0 0 1px rgba(44,37,35,.07)}
+  .arc img{width:100%;height:100%;object-fit:cover;object-position:46% 50%;border-radius:218px 218px 22px 22px;display:block}
+  .heart{position:absolute;right:566px;bottom:50px;width:46px;height:46px;color:var(--rose);fill:currentColor;opacity:.9}
+</style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="txt">
+    <div class="o-a">Красота,</div>
+    <div class="o-b">с любовью</div>
+    <div class="o-line"></div>
+    <div class="o-tag">Бьюти-пространство<br>в Гатчине</div>
+    <div class="o-chips">Услуги · Коворкинг · Обучение</div>
+    <div class="o-addr">ул. Горького, 3 &nbsp;·&nbsp; +7 (911) 128-01-22</div>
+  </div>
+  <svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-6.7-4.3-9-8.2C1.3 9.9 2.6 6 6.2 5.1 8.4 4.6 10.7 5.6 12 7.4c1.3-1.8 3.6-2.8 5.8-2.3 3.6.9 4.9 4.8 3.2 7.7-2.3 3.9-9 8.2-9 8.2Z"/></svg>
+  <div class="arc"><img src="../photos/hero-studio.webp" alt=""></div>
+</body>
+</html>

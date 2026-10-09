@@ -1247,3 +1247,6 @@ body::after{
   .doc-toc a{padding:9px 0}
   .ftr__base a{padding:11px 0;margin:-9px 0}
 }
+
+/* страница «404» */
+.nf-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}

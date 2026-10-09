@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://krasotalove.ru/sitemap.xml

@@ -18,6 +18,8 @@ const ZIP = path.join(DIST, 'krasota-site.zip');
 
 const pages = fs.readdirSync(ROOT).filter(f => f.endsWith('.html')).sort();
 const code = ['styles.css', 'main.js', 'cloud.js'];
+/* файлы в корне сайта: значки для поисковиков и браузеров, robots.txt, sitemap.xml */
+const root = ['favicon.ico', 'favicon.svg', 'icon-192.png', 'apple-touch-icon.png', 'robots.txt', 'sitemap.xml'];
 
 /* .htaccess: сжатие и кэш. HTML кэшируется на 10 минут, остальное — на месяц
    (ссылки на стили, скрипты и фото содержат ?v=отпечаток, поэтому обновления видны сразу). */
@@ -36,12 +38,17 @@ const HTACCESS = `# Красота с любовью — сжатие и кэш 
   ExpiresByType image/jpeg "access plus 1 month"
   ExpiresByType image/png "access plus 1 month"
   ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType image/vnd.microsoft.icon "access plus 1 month"
   ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType application/font-woff2 "access plus 1 year"
 </IfModule>
 
 AddType font/woff2 .woff2
 AddType image/webp .webp
+
+# своя страница «404»
+ErrorDocument 404 /404.html
 `;
 
 /* какие фото и шрифты нужны: всё, что упомянуто в страницах и коде */
@@ -51,13 +58,13 @@ for (const f of [...pages, ...code]) {
   for (const m of s.matchAll(/\b((?:photos|fonts)\/[A-Za-z0-9_\-./]+\.[A-Za-z0-9]+)/g)) refs.add(m[1]);
   if (f.endsWith('.html')) for (const m of s.matchAll(/\b(?:href|src)="(\/[^\/"][^"]*)"/g)) rootAbs.push(`${f}: ${m[1]}`);
 }
-const missing = [...refs].filter(r => !fs.existsSync(path.join(ROOT, r)));
+const missing = [...refs, ...root].filter(r => !fs.existsSync(path.join(ROOT, r)));
 if (missing.length) { console.error('НЕТ ФАЙЛОВ, на которые есть ссылки:\n  ' + missing.join('\n  ')); process.exit(1); }
 if (rootAbs.length) { console.error('Ссылки от корня сайта (/…) сломаются в подпапке:\n  ' + rootAbs.join('\n  ')); process.exit(1); }
 
 fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(SITE, { recursive: true });
-for (const f of [...pages, ...code, ...refs]) {
+for (const f of [...pages, ...code, ...root, ...refs]) {
   const to = path.join(SITE, f);
   fs.mkdirSync(path.dirname(to), { recursive: true });
   fs.copyFileSync(path.join(ROOT, f), to);
@@ -71,6 +78,6 @@ const r = cp.spawnSync(tar, ['-a', '-c', '-f', ZIP, '-C', SITE, ...top], { encod
 if (r.status !== 0) { console.error('Не удалось собрать zip: ' + (r.stderr || r.error)); console.error('Папка dist/site готова — её можно заархивировать вручную.'); process.exit(1); }
 
 const size = p => fs.statSync(p).size;
-const total = [...pages, ...code, ...refs].reduce((a, f) => a + size(path.join(SITE, f)), 0);
+const total = [...pages, ...code, ...root, ...refs].reduce((a, f) => a + size(path.join(SITE, f)), 0);
 console.log(`страниц: ${pages.length}, фото и шрифтов: ${refs.size}, всего ${(total / 1048576).toFixed(1)} МБ`);
 console.log(`архив: ${path.relative(ROOT, ZIP)} (${(size(ZIP) / 1048576).toFixed(1)} МБ)`);
