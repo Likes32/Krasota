@@ -1250,3 +1250,14 @@ body::after{
 
 /* страница «404» */
 .nf-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+
+/* график работы: коворкинг и Анастасия */
+.sched{display:flex;align-items:center;gap:14px;margin-top:22px;padding:14px 18px;border-radius:18px;
+  background:var(--pink-pale);border:1px solid var(--line-rose);max-width:560px}
+.sched p{margin:0;font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sched b{color:var(--ink);font-weight:600}
+.sched .ic-badge{width:42px;height:42px;background:#fff}
+.sched .ic-badge .ic{width:20px;height:20px}
+.sched--center{margin-inline:auto;justify-content:center;text-align:left}
+.sec-head .sched{margin-top:20px}
+@media (max-width:620px){.sched{padding:12px 14px;gap:12px}}

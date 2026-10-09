@@ -27,7 +27,7 @@ const BUSINESS = {
   address: { '@type': 'PostalAddress', streetAddress: 'ул. Горького, д. 3', addressLocality: 'Гатчина', addressRegion: 'Ленинградская область', addressCountry: 'RU' },
   geo: { '@type': 'GeoCoordinates', latitude: 59.56557, longitude: 30.124248 },
   hasMap: 'https://yandex.ru/maps/10867/gatchina/house/ulitsa_gorkogo_3/Z0kYdwVkS0EPQFtjfXl3dHlkZA==/',
-  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '09:00', closes: '21:00' }],
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '08:00', closes: '21:00' }],
   founder: { '@type': 'Person', name: 'Анастасия Коробова' },
   sameAs: ['https://dikidi.net/1523754', 'https://dikidi.net/1794550']
 };
