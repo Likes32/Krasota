@@ -8,3 +8,5 @@ tools/.sr/
 package.json
 package-lock.json
 tools/.hf-cache/
+
+dist/

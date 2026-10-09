@@ -55,6 +55,6 @@ for (const page of fs.readdirSync(ROOT).filter(f => f.endsWith('.html'))) {
 
 console.log(`изменено страниц: ${changed}; полей в тексте: ${fields}; подвалов: ${footers}`);
 if (missing.length) {
-  console.log('НЕ ЗАПОЛНЕНО в legal.json: ' + missing.join(', ') + ' (на страницах стоят подсвеченные заглушки)');
+  console.log('НЕ ЗАПОЛНЕНО в legal.json: ' + missing.join(', ') + ' (в политике этих данных нет; строка реквизитов в подвале не выводится, пока не заполнены ФИО, ИНН и ОГРНИП)');
   if (process.argv.includes('--check')) process.exit(1);
 } else console.log('Все сведения заполнены.');
