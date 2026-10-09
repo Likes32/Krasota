@@ -1222,14 +1222,6 @@ body::after{
 .doc-list li::marker{color:var(--rose)}
 .doc-list b{font-weight:600;color:var(--ink)}
 
-.doc-contacts{
-  font-style:normal;padding:clamp(18px,2.6vw,26px);
-  background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);
-}
-.doc-contacts p{margin:0 0 5px}
-.doc-contacts p:last-child{margin-bottom:0}
-.doc-contacts b{font-weight:600;color:var(--ink)}
-
 /* незаполненное поле реквизитов: заметная заглушка, чтобы её нельзя было пропустить */
 .fill{
   background:rgba(231,126,147,.16);color:var(--rose-ink);font-style:normal;
